@@ -20,17 +20,9 @@
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/home/python/app",
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"terminal.integrated.defaultProfile.linux": "zsh",
-		"python.pythonPath": "/usr/local/bin/python"
-	},
 
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"ms-python.python",
-		"sourcery.sourcery"
-	],
+	
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
@@ -45,5 +37,18 @@
 	// "postCreateCommand": "apt-get update && apt-get install -y curl",
 
 	// Uncomment to connect as a non-root user if you've added one. See https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "python"
+	"remoteUser": "python",
+
+	"customizations": {
+		"extensions": [
+			"ms-python.python",
+			"sourcery.sourcery"
+		],
+			// Set *default* container specific settings.json values on container create.
+		"settings": {
+			"terminal.integrated.defaultProfile.linux": "zsh",
+			"python.pythonPath": "/usr/local/bin/python"
+		}
+
+	}
 }
