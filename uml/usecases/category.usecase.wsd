@@ -1,4 +1,4 @@
-@startuml
+@startuml categoria
 
 :Admin: -> (Criar categoria)
 :Admin: -> (Atualizar categoria)

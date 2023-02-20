@@ -1,3 +1,5 @@
 .history/
 .code/
 .env
+__pycache__/
+*.pyc
