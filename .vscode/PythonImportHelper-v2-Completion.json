@@ -3243,10 +3243,10 @@
     },
     {
         "label": "Category",
-        "importPath": "category.domain.entities",
-        "description": "category.domain.entities",
+        "importPath": "src.category.domain.entities",
+        "description": "src.category.domain.entities",
         "isExtraImport": true,
-        "detail": "category.domain.entities",
+        "detail": "src.category.domain.entities",
         "documentation": {}
     },
     {

@@ -2,8 +2,7 @@ from dataclasses import is_dataclass
 from datetime import datetime
 import unittest
 
-from category.domain.entities import Category
-
+from src.category.domain.entities import Category
 
 
 class TestCategoryUnit(unittest.TestCase):
