@@ -1,6 +1,11 @@
 .history/
+.docker/zsh/history/.zsh_history
+__pypackages__
+.pytest_cache
 .code/
 .env
 __pycache__/
 *.pyc
 .idea/
+.coverage
+__coverage
