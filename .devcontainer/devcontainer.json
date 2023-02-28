@@ -44,11 +44,13 @@
 			"extensions": [
 				"VisualStudioExptTeam.vscodeintellicode",
 				"ms-python.python",
+				"GitHub.copilot",
 				"SonarSource.sonarlint-vscode",
 				"sourcery.sourcery",
 				"eamodio.gitlens",
 				"xyz.local-history",
-				"vivaxy.vscode-conventional-commits"
+				"vivaxy.vscode-conventional-commits",
+				
 			]
 		}
 	},

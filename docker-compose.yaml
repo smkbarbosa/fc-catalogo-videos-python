@@ -4,6 +4,6 @@ services:
   app:
     build: .
     container_name: micro-videos-python-app
-    entrypoint: ./.docker/entrypoint.sh
+    command: ./.docker/entrypoint.sh
     volumes:
       - .:/home/python/app

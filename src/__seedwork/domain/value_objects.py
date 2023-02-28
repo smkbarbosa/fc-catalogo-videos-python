@@ -10,20 +10,22 @@ from __seedwork.domain.exceptions import InvalidUuidException
 class ValueObject(ABC):
     def __str__(self) -> str:
         fields_name = [f.name for f in fields(self)]
-        return str(getattr(self, fields_name[0])) \
-                   if len(fields_name) == 1 \
-                   else json.dumps({field_name: getattr(self, field_name) for field_name in fields_name})
+        return (
+            str(getattr(self, fields_name[0]))
+            if len(fields_name) == 1
+            else json.dumps(
+                {field_name: getattr(self, field_name) for field_name in fields_name}
+            )
+        )
 
 
 @dataclass(frozen=True)
 class UniqueEntityId(ValueObject):
-    id: str = field(
-        default_factory=lambda: str(uuid.uuid4())
-                    )
+    id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
     def __post_init__(self):
         id_value = str(self.id) if isinstance(self.id, uuid.UUID) else self.id
-        object.__setattr__(self, 'id', id_value)
+        object.__setattr__(self, "id", id_value)
         self.__validate()
 
     def __validate(self):
