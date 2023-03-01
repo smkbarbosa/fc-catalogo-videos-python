@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 from __seedwork.domain.exceptions import EntityValidationException
-from __seedwork.entities.entities import Entity
+from __seedwork.domain.entities import Entity
 from category.domain.validators import CategoryValidatorFactory
 
 # 3.10 - DataClass

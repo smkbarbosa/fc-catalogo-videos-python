@@ -3,7 +3,7 @@ from abc import ABC
 from dataclasses import dataclass, is_dataclass
 
 from __seedwork.domain.value_objects import UniqueEntityId
-from __seedwork.entities.entities import Entity
+from __seedwork.domain.entities import Entity
 
 
 @dataclass(frozen=True, kw_only=True)

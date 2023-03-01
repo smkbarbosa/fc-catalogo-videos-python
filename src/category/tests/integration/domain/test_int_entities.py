@@ -67,7 +67,7 @@ class TestCategoryIntegration(unittest.TestCase):
             self.fail(f'Some prop is not valid. Error: {exception.error}')
 
     def test_update_with_invalid_cases_for_name_prop(self):
-        category = Category(name='Movie')
+        category = Category(name='Movie') 
 
         invalid_data = [
             {
