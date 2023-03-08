@@ -11,17 +11,16 @@ class TestCategoryInMemoryRepositoryUnit(unittest.TestCase):
     def setUp(self):
         self.repo = CategoryInMemoryRepository()
 
-    
     def test_if_filter_is_null(self):
         et = Category(name='Animação')
-        
+
         items = [et]
         # pylint: disable=protected-access
         result = self.repo._apply_filter(items, None)
         self.assertEqual(items, result)
 
     def test_filter(self):
-        
+
         items = [
             Category(name='terror'),
             Category(name='TERROR'),
@@ -29,7 +28,7 @@ class TestCategoryInMemoryRepositoryUnit(unittest.TestCase):
         ]
 
         result = self.repo._apply_filter(items, 'TERROR')
-        self.assertEqual(result, [items[0], items[1]] )
+        self.assertEqual(result, [items[0], items[1]])
 
     def test_sort_by_created_at_is_null(self):
         items = [
@@ -39,7 +38,7 @@ class TestCategoryInMemoryRepositoryUnit(unittest.TestCase):
         ]
 
         result = self.repo._apply_sort(items, None, None)
-        self.assertEqual(result, [items[2], items[0], items[1]] )
+        self.assertEqual(result, [items[2], items[0], items[1]])
 
     def test_sort_by_name(self):
         items = [
@@ -52,7 +51,9 @@ class TestCategoryInMemoryRepositoryUnit(unittest.TestCase):
         ]
 
         result = self.repo._apply_sort(items, 'name', 'asc')
-        self.assertEqual(result, [items[1], items[3], items[2], items[4], items[5], items[0]] )
+        self.assertEqual(result, [items[1], items[3],
+                         items[2], items[4], items[5], items[0]])
 
         result = self.repo._apply_sort(items, 'name', 'desc')
-        self.assertEqual(result, [items[0], items[5], items[4], items[2], items[3], items[1]] )
+        self.assertEqual(result, [items[0], items[5],
+                         items[4], items[2], items[3], items[1]])

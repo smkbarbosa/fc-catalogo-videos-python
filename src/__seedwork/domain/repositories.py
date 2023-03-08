@@ -1,6 +1,6 @@
 from abc import ABC
 import abc
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, Field
 import math
 from typing import Any, Generic, ItemsView, List, Optional, TypeVar
 from __seedwork.domain.entities import Entity
@@ -101,7 +101,7 @@ class SearchParams(Generic[Filter]):
 
     def _get_dataclass_field(self, field_name):  # pylint: disable=no-self-use
         return SearchParams.__dataclass_fields__[field_name]  # pylint: disable=no-member
-    
+
 
 @dataclass(slots=True, kw_only=True, frozen=True)
 class SearchResult(Generic[ET, Filter]):
@@ -115,11 +115,11 @@ class SearchResult(Generic[ET, Filter]):
     filter: Optional[Filter] = None
 
     def __post_init__(self):
-       object.__setattr__(
+        object.__setattr__(
             self,
-            'last_page', 
+            'last_page',
             math.ceil(self.total / self.per_page)
-       )
+        )
 
     def to_dict(self):
         return {
@@ -163,8 +163,8 @@ class InMemoryRepository(RepositoryInterface[ET], ABC):
         if not entity:
             raise NotFoundException(f"Entity not found using ID '{entity_id}'")
         return entity
-    
-    
+
+
 class InMemorySearchableRepository(
     Generic[ET, Filter],
     InMemoryRepository[ET],
@@ -206,4 +206,3 @@ class InMemorySearchableRepository(
         start = (page - 1) * per_page
         limit = start + per_page
         return items[slice(start, limit)]
-

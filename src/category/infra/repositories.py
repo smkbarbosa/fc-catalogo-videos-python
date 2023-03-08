@@ -5,7 +5,7 @@ from category.domain.repositories import CategoryRepository
 
 
 class CategoryInMemoryRepository(CategoryRepository, InMemorySearchableRepository):
-    # Poderemos filtrar categorias por seu nome, qualquer termo passado deverá ser pesquisa 
+    # Poderemos filtrar categorias por seu nome, qualquer termo passado deverá ser pesquisa
     # do começo ao fim do valor do nome
     # Se no filtro não existir um parâmetro de ordenação, precisa ordenar por padrão pelo created_at.
     sortable_fields: List[str] = ["name", "created_at"]
@@ -17,6 +17,6 @@ class CategoryInMemoryRepository(CategoryRepository, InMemorySearchableRepositor
             )
             return list(obj)
         return items
-    
+
     def _apply_sort(self, items: List[Category], sort: str = None, sort_dir: str = None) -> List[Category]:
         return super()._apply_sort(items, sort, sort_dir) if sort else super()._apply_sort(items, 'created_at', 'desc')

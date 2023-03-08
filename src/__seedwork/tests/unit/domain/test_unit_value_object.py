@@ -39,7 +39,8 @@ class TestValueObjectUnit(unittest.TestCase):
         self.assertEqual(value_object.prop, str(value_object))
         value_object2 = StubTwoProp(prop1="some value", prop2="some value 2")
         self.assertEqual(
-            '{"prop1": "some value", "prop2": "some value 2"}', str(value_object2)
+            '{"prop1": "some value", "prop2": "some value 2"}', str(
+                value_object2)
         )
 
     def test_is_immutable(self):
@@ -62,7 +63,8 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             with self.assertRaises(InvalidUuidException) as assert_error:
                 UniqueEntityId("some invalid uuid")
                 mock_validate.assert_called_once()
-            self.assertEqual(str(assert_error.exception), "ID must be a valid UUID")
+            self.assertEqual(str(assert_error.exception),
+                             "ID must be a valid UUID")
 
     def test_accept_uuid_passed_in_constructor(self):
         with patch.object(
@@ -71,9 +73,11 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             autospec=True,
             side_effect=UniqueEntityId._UniqueEntityId__validate,
         ) as mock_validate:
-            value_object = UniqueEntityId("6b9d8a6c-6c3d-4b3f-9c9d-2c9d68a6c6d3")
+            value_object = UniqueEntityId(
+                "6b9d8a6c-6c3d-4b3f-9c9d-2c9d68a6c6d3")
             mock_validate.assert_called_once()
-            self.assertEqual(value_object.id, "6b9d8a6c-6c3d-4b3f-9c9d-2c9d68a6c6d3")
+            self.assertEqual(
+                value_object.id, "6b9d8a6c-6c3d-4b3f-9c9d-2c9d68a6c6d3")
 
         uuid_value = uuid.uuid4()
         value_object = UniqueEntityId(uuid_value)
