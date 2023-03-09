@@ -33,7 +33,7 @@ class TestCategoryUnit(unittest.TestCase):
             self.assertEqual(category1.created_at, created_at)
 
     def test_if_created_at_is_generated_in_constructor(self):
-        with patch.object(Category, 'validate') as mock_validate_method:
+        with patch.object(Category, 'validate'):
             category1 = Category(name="Animação")
             category2 = Category(name="Terror")
             self.assertNotEqual(
@@ -41,26 +41,26 @@ class TestCategoryUnit(unittest.TestCase):
             )
 
     def test_if_is_immutable(self):
-        with patch.object(Category, 'validate') as mock_validate_method:
+        with patch.object(Category, 'validate'):
             with self.assertRaises(FrozenInstanceError):
                 category = Category(name="Movie")
                 category.name = "some name"
 
     def test_update_category(self):
-        with patch.object(Category, 'validate') as mock_validate_method:
+        with patch.object(Category, 'validate'):
             category = Category(name="Movie")
             category.update(name="some name", description="some description")
             self.assertEqual(category.name, "some name")
             self.assertEqual(category.description, "some description")
 
     def test_activate(self):
-        with patch.object(Category, 'validate') as mock_validate_method:
+        with patch.object(Category, 'validate'):
             category = Category(name="Movie")
             category.activate()
             self.assertTrue(category.is_active)
 
     def test_deactivate(self):
-        with patch.object(Category, 'validate') as mock_validate_method:
+        with patch.object(Category, 'validate'):
             category = Category(name="Movie")
             category.deactivate()
             self.assertFalse(category.is_active)

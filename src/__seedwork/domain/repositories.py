@@ -1,12 +1,11 @@
 from abc import ABC
 import abc
-from dataclasses import dataclass, field, Field
+from dataclasses import dataclass, field
 import math
-from typing import Any, Generic, ItemsView, List, Optional, TypeVar
-from __seedwork.domain.entities import Entity
+from typing import Any, Generic, List, Optional, TypeVar
 from __seedwork.domain.value_objects import UniqueEntityId
+from __seedwork.domain.entities import Entity
 from __seedwork.domain.exceptions import NotFoundException
-
 
 ET = TypeVar('ET', bound=Entity)
 
@@ -104,7 +103,7 @@ class SearchParams(Generic[Filter]):
 
 
 @dataclass(slots=True, kw_only=True, frozen=True)
-class SearchResult(Generic[ET, Filter]):
+class SearchResult(Generic[ET, Filter]):  # pylint: disable=too-many-instance-attributes
     items: List[ET]
     total: int
     current_page: int

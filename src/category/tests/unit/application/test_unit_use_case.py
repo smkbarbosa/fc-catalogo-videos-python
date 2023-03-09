@@ -8,7 +8,10 @@ from __seedwork.application.use_case import UseCase
 from __seedwork.domain.exceptions import NotFoundException
 from category.application.dto import CategoryOutputMapper, CategoryOutput
 
-from category.application.use_cases import CreateCategoryUseCase, GetCategoryUseCase, ListCategoriesUseCase
+from category.application.use_cases import \
+    CreateCategoryUseCase, DeleteCategoryUseCase, \
+    GetCategoryUseCase, ListCategoriesUseCase, \
+    UpdateCategoryUseCase
 from category.domain.entities import Category
 from category.domain.repositories import CategoryRepository
 from category.infra.repositories import CategoryInMemoryRepository
@@ -246,11 +249,12 @@ class TestListCategoriesUseCase(unittest.TestCase):
             filter='a'
         )
         output = self.use_case.execute(input_param)
+
         self.assertEqual(output, ListCategoriesUseCase.Output(
             items=list(
                 map(
                     CategoryOutputMapper.without_child().to_output,
-                    [items[1], items[2]]
+                    [items[0], items[2]]
                 )
             ),
             total=3,
@@ -271,7 +275,7 @@ class TestListCategoriesUseCase(unittest.TestCase):
             items=list(
                 map(
                     CategoryOutputMapper.without_child().to_output,
-                    [items[0]]
+                    [items[1]]
                 )
             ),
             total=3,
@@ -321,3 +325,87 @@ class TestListCategoriesUseCase(unittest.TestCase):
             per_page=2,
             last_page=2
         ))
+
+class TestUpdateCategoryUnit(unittest.TestCase):
+    use_case: UpdateCategoryUseCase
+    category_repo: CategoryInMemoryRepository
+
+    def setUp(self) -> None:
+        self.category_repo = CategoryInMemoryRepository()
+        self.use_case = UpdateCategoryUseCase(self.category_repo)
+
+    def test_instance_use_case(self):
+        self.assertIsInstance(self.use_case, UseCase)
+
+    def test_input(self):
+        self.assertEqual(UpdateCategoryUseCase.Input.__annotations__, {
+            'id': str,
+            'name': str,
+            'description': Optional[str],
+            'is_active': Optional[bool]
+        })
+
+    def test_output(self):
+        self.assertTrue(issubclass(
+            UpdateCategoryUseCase.Output, CategoryOutput))
+
+    def test_throw_exception_when_category_not_found(self):
+        request = UpdateCategoryUseCase.Input(id='not_found', name='test')
+        with self.assertRaises(NotFoundException) as assert_error:
+            self.use_case.execute(request)
+        self.assertEqual(
+            assert_error.exception.args[0], "Entity not found using ID 'not_found'")
+
+    def test_execute(self):
+        entity = Category(name='test')
+        self.category_repo.items = [entity]
+        request = UpdateCategoryUseCase.Input(
+            id=entity.id,
+            name='test 2',
+            description='test description',
+            is_active=False
+        )
+        output = self.use_case.execute(request)
+        self.assertEqual(output, UpdateCategoryUseCase.Output(
+            id=entity.id,
+            name='test 2',
+            description='test description',
+            is_active=False,
+            created_at=entity.created_at,
+        ))
+        self.assertEqual(self.category_repo.items[0].name, 'test 2')
+        self.assertEqual(self.category_repo.items[0].description, 'test description')
+        self.assertFalse(self.category_repo.items[0].is_active)
+
+
+class TestDeleteCategoryUnit(unittest.TestCase):
+
+    use_case: DeleteCategoryUseCase
+    category_repo: CategoryInMemoryRepository
+
+    def setUp(self) -> None:
+        self.category_repo = CategoryInMemoryRepository()
+        self.use_case = DeleteCategoryUseCase(self.category_repo)
+
+    def test_instance_use_case(self):
+        self.assertIsInstance(self.use_case, UseCase)
+
+    def test_input(self):
+        self.assertEqual(DeleteCategoryUseCase.Input.__annotations__, {
+            'id': str
+        })
+
+    def test_throw_exception_when_category_not_found(self):
+        request = DeleteCategoryUseCase.Input(id='not_found')
+        with self.assertRaises(NotFoundException) as assert_error:
+            self.use_case.execute(request)
+        self.assertEqual(
+            assert_error.exception.args[0], "Entity not found using ID 'not_found'")
+
+    def test_execute(self):
+        entity = Category(name='test')
+        self.category_repo.items = [entity]
+        request = DeleteCategoryUseCase.Input(id=entity.id)
+        self.use_case.execute(request)
+        self.assertEqual(self.category_repo.items, [])
+    
