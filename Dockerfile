@@ -37,10 +37,11 @@ RUN bash -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/downloa
     -p https://github.com/zsh-users/zsh-completions \
     -a 'export TERM=xterm-256color'
 
+CMD [ "tail", "-f", "/dev/null" ]
 RUN echo '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh' >> ~/.zshrc && \
     echo 'HISTFILE=/home/python/zsh/.zsh_history' >> ~/.zshrc && \
     echo 'eval "$(pdm --pep582)"' >> ~/.zshrc && \
     echo 'eval "$(pdm --pep582)"' >> ~/.bashrc
+# RUN echo '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh' >> ~/.zshrc && \
+#   echo 'HISTFILE=/home/python/zsh/.zsh_history' >> ~/.zshrc
 
-
-CMD [ "tail", "-f", "/dev/null" ]

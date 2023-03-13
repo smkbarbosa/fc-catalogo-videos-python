@@ -5,27 +5,28 @@ description = ""
 authors = [
     {name = "Luiz Carlos", email = "argentinaluiz@gmail.com"},
 ]
-license-expression = "MIT"
+
 dependencies = [
+    "django>=4.1.7",
     "djangorestframework>=3.13.1",
-    "pytest-cov>=4.0.0",
 ]
 requires-python = ">=3.10.2"
+license = {text = "MIT"}
 
-[project.urls]
-Homepage = ""
-
-[project.optional-dependencies]
 [tool.pdm]
 [tool.pdm.dev-dependencies]
 dev = [
+    "pytest-cov>=4.0.0",
     "autopep8>=1.6.0",
     "pylint>=2.13.0",
     "pytest>=7.1.1",
 ]
+
 [tool.pdm.scripts]
+manage = "python ./src/django_app/manage.py"
 pep8 = "autopep8 --in-place --recursive ./src"
 pylint = "pylint ./src"
+runserver = "pdm run manage runserver 0.0.0.0:8000"
 test = "pytest --ignore __pypackages__"
 test_cov = "pdm run test --cov ./src --cov-fail-under 80"
 test_cov_html = "pdm run test_cov --cov-report html:./__coverage"
